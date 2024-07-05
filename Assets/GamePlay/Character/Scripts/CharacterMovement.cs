@@ -38,10 +38,14 @@ public class CharacterMovement : MonoBehaviour
 
     private void FixedUpdate() 
     {
-        _isGrounded = Physics.CheckSphere(_groundCheckerPivot.position, _checkGroundRadius, _gorundMask);
-        if(_isGrounded && _velocity < 0)
+        if(_velocity < 0)
         {
-            _velocity = -2f;
+            _isGrounded = Physics.CheckSphere(_groundCheckerPivot.position, _checkGroundRadius, _gorundMask);
+            
+            if(_isGrounded)
+            {
+                _velocity = -2f;
+            }
         }
     
         Move(_moveDirection);
