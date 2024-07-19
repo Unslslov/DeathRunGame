@@ -1,0 +1,34 @@
+{
+    "name": "CharacterInputButtons",
+    "maps": [
+        {
+            "name": "CharacterContoller",
+            "id": "db527113-08f0-49df-ad56-fa5d36426da9",
+            "actions": [
+                {
+                    "name": "Gameplay",
+                    "type": "Button",
+                    "id": "f5864385-823c-4064-a5e9-fdfb105be097",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "478ada4d-d4e1-43ba-b60f-86e8c2f9a168",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Gameplay",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

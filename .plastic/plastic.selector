@@ -1,0 +1,4 @@
+repository "Test3DInstruments@Unsl@cloud"
+  path "/"
+    br "/main"
+    co "/main"
