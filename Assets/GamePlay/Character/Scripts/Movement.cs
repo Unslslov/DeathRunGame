@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Player 
 {
@@ -8,18 +7,17 @@ namespace Player
     public class Movement : MonoBehaviour
     {
     [SerializeField] private Joystick _joystick;
-    [SerializeField] private Button  _buttonJump;
-
+    [SerializeField] FixedTouchField  _jumpInput;
 
     [Header("GroundChecker Settings")]
     [SerializeField] private LayerMask _gorundMask;
     [SerializeField] private Transform _groundCheckerPivot;
-    [SerializeField] private float _checkGroundRadius = 0.4f;
+    [SerializeField] private float _checkGroundRadius = 0.4f; 
 
     [Header("Movement Settings")]
-    [SerializeField] private float _gravity = -9.81f;
-    [SerializeField] private float _speed = 10f;
-    [SerializeField] private float jumpHeight = 3f;
+    [SerializeField] private float _gravity;
+    [SerializeField] private float _speed;
+    [SerializeField] private float _jumpForce;
 
     [Header("Accelerate")]
     [SerializeField] private float _acceleration = .5f;
@@ -29,11 +27,13 @@ namespace Player
     [Header("Speedometr")]
     [SerializeField] private Speedometer speedometer; 
 
-    private Rigidbody _rb;
-    private Animator _anim;
+    [SerializeField] private Rigidbody _rb;
+    [SerializeField] private Animator _anim;
+    [SerializeField] private float  _velocity;
+    
     private Vector3 _moveDirection;
-    private float  _velocity;
     private bool _isGrounded;
+    private int countJump;
     private float _startSpeed;
 
 
@@ -41,11 +41,6 @@ namespace Player
     {
         _rb ??= GetComponent<Rigidbody>();
         _anim ??= GetComponent<Animator>();
-    }
-
-    private void Awake() 
-    {
-        _startSpeed = _speed;
     }
 
     private void FixedUpdate() 
@@ -63,27 +58,47 @@ namespace Player
     
     private void Update()
     {
-        _moveDirection = transform.right * _joystick.Horizontal + transform.forward * _joystick.Vertical;
+        // _moveDirection = transform.right * _joystick.Horizontal + transform.forward * _joystick.Vertical;
+
+        // DoAnimate(_moveDirection);
+        
+        // if(_isGrounded && _jumpInput.isJumping)
+        // {
+        //    Jump();
+        // }
+        // else if(!_isGrounded && _jumpInput.isJumping && _moveDirection.z != 0)
+        // {
+        //     _speed = Mathf.Lerp(_speed, _maxSpeed, _acceleration * Time.deltaTime);
+
+        //     speedometer?.GetTargetVelocity(_speed);
+        // }
+        // else if(_jumpInput.isJumping == false)
+        // {
+        //     _speed = Mathf.Lerp(_speed, _startSpeed, _deceleration * Time.deltaTime);
+
+        //     speedometer?.GetTargetVelocity(_speed);
+        // }
+        _moveDirection = transform.right * Input.GetAxis("Horizontal") + transform.forward * Input.GetAxis("Vertical");
 
         DoAnimate(_moveDirection);
         
-        bool isSpaceHold = Input.GetKey(KeyCode.Space);
+        //    countJump = 0;
+        //    countJump += 1;
+        // else if(countJump == 1) //&& TODO: DoubleClickInput)
+        // {
 
-        //TODO: Create JumpButton
-        
-        //bool isButtonHold = (_buttonJump);  
-        if(_isGrounded && isSpaceHold)
+        // }
+        if(_isGrounded && Input.GetKeyDown(KeyCode.Space))
         {
-        //   _buttonJump.onClick.AddListener(Jump);
-           Jump();
+           Jump();  
         }
-        else if(!_isGrounded && isSpaceHold && _moveDirection.z != 0)
+        else if(!_isGrounded && Input.GetKeyDown(KeyCode.Space) && _moveDirection.z != 0)
         {
             _speed = Mathf.Lerp(_speed, _maxSpeed, _acceleration * Time.deltaTime);
 
             speedometer?.GetTargetVelocity(_speed);
         }
-        else if(isSpaceHold == false)
+        else if(Input.GetKeyDown(KeyCode.Space) == false)
         {
             _speed = Mathf.Lerp(_speed, _startSpeed, _deceleration * Time.deltaTime);
 
@@ -91,9 +106,10 @@ namespace Player
         }
     }
 
+
     private void Jump()
     {
-        _velocity = Mathf.Sqrt(jumpHeight * -2 * _gravity);
+        _velocity = Mathf.Sqrt(_jumpForce * -2 * _gravity);
 
         _rb.velocity = new Vector3(_rb.velocity.x, _velocity, _rb.velocity.z);
     }
@@ -114,6 +130,15 @@ namespace Player
 
         _anim.SetFloat("Speed", speed);
         // _anim.SetFloat("Speed", Mathf.Abs(move.z) > 0 ? Mathf.Abs(move.z) : Mathf.Abs(move.x) > 0 ? Mathf.Abs(move.x) : 0);
+    }
+
+    public void SetMovementSettings(KnifeСell knifeCell)
+    {
+        _speed = knifeCell.Speed;
+        _gravity = knifeCell.Gravity;
+        _jumpForce = knifeCell.JumpForce;
+
+        _startSpeed = _speed;
     }
     }
 }

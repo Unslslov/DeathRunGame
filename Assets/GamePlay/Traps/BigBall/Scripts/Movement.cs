@@ -22,7 +22,7 @@ namespace BigBall
 
         private void OnValidate() 
         {
-            _rb ??= GetComponent<Rigidbody>();    
+            _rb ??= GetComponent<Rigidbody>();   
         }
 
         private void OnCollisionEnter(Collision col) 

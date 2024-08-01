@@ -11,12 +11,24 @@ public class SpawnPointCollection : MonoBehaviour
 
     private void Start() 
     {
-         for(int i = 0; i < _spawns.childCount; i++)
+        if(_spawnPointAfterDeaths.Count == 0)
         {
-            _spawns.GetChild(i).GetComponent<SpawnPointAfterDeath>().NumberPoint = i;
-            _spawns.GetChild(i).GetComponent<SpawnPointAfterDeath>().GetNumberPoint += GetPoint;
-            
-            _spawnPointAfterDeaths.Add(_spawns.GetChild(i).GetComponent<SpawnPointAfterDeath>());
+            for(int i = 0; i < _spawns.childCount; i++)
+            {
+                var childSpawn = _spawns.GetChild(i).GetComponent<SpawnPointAfterDeath>(); 
+
+                childSpawn.NumberPoint = i;
+                childSpawn.GetNumberPoint += GetPoint;
+                
+                _spawnPointAfterDeaths.Add(childSpawn);
+            }
+        }
+        else
+        {
+            for(int i = 0; i < _spawns.childCount; i++)
+            {
+                _spawns.GetChild(i).GetComponent<SpawnPointAfterDeath>().GetNumberPoint += GetPoint;
+            }
         }
     }
 
@@ -27,10 +39,12 @@ public class SpawnPointCollection : MonoBehaviour
 
     private void OnDestroy() 
     {
-         for(int i = 0; i < _spawns.childCount; i++)
+        for(int i = 0; i < _spawns.childCount; i++)
         {   
-            _spawns.GetChild(i).GetComponent<SpawnPointAfterDeath>().GetNumberPoint -= GetPoint;
-            _spawnPointAfterDeaths.Remove(_spawns.GetChild(i).GetComponent<SpawnPointAfterDeath>());
+            var childSpawn = _spawns.GetChild(i).GetComponent<SpawnPointAfterDeath>(); 
+
+            childSpawn.GetNumberPoint -= GetPoint;
+            _spawnPointAfterDeaths.Remove(childSpawn);
         }
     }
 }

@@ -3,6 +3,9 @@ using UnityEngine.EventSystems;
 
 public class FixedTouchField : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
+    [SerializeField] private Rect _TouchFieldForJump;
+    [SerializeField] private RectTransform rectTransform;
+
     [HideInInspector]
     public Vector2 TouchDist;
     [HideInInspector]
@@ -11,6 +14,25 @@ public class FixedTouchField : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     protected int PointerId;
     [HideInInspector]
     public bool Pressed;
+
+    public bool isJumping;
+
+
+    void Start()
+    {
+        _TouchFieldForJump = GetRectFromRectTransform(rectTransform);
+    }
+
+    private Rect GetRectFromRectTransform(RectTransform rt)
+    {
+        Vector3[] corners = new Vector3[4];
+        rt.GetWorldCorners(corners);
+
+        Vector2 min = new Vector2(corners[0].x, corners[0].y);
+        Vector2 max = new Vector2(corners[2].x, corners[2].y);
+
+        return new Rect(min, max - min);
+    }
 
     void Update()
     {
@@ -38,11 +60,20 @@ public class FixedTouchField : MonoBehaviour, IPointerDownHandler, IPointerUpHan
         Pressed = true;
         PointerId = eventData.pointerId;
         PointerOld = eventData.position;
+
+        var touchPosition = eventData.position;
+
+        if ((touchPosition.x > _TouchFieldForJump.min.x && touchPosition.y > _TouchFieldForJump.min.y) &&
+            (touchPosition.x < _TouchFieldForJump.max.x && touchPosition.y < _TouchFieldForJump.max.y))
+        {
+            isJumping = true;
+        }
     }
 
 
     public void OnPointerUp(PointerEventData eventData)
     {
         Pressed = false;
+        isJumping = false;
     }
 }

@@ -16,8 +16,8 @@ TagManager:
   - 
   - Ground
   - Player
-  - 
-  - 
+  - InvisibleWall
+  - InvisibleFloor
   - 
   - 
   - 

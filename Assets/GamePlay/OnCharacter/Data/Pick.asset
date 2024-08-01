@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b9e57af206554949b67e9d199c4538d, type: 3}
+  m_Name: Pick
+  m_EditorClassIdentifier: 
+  _speed: 5
+  _jumpForce: 3
+  _gravity: -15.81
+  _imageIcon: {fileID: 21300000, guid: e48127c43c90a8b488014e0220cd1aa8, type: 3}
+  _weaponPrefab: {fileID: 7467026602206995704, guid: 3eef0ba02ae0af84888a342e3f6ae728, type: 3}
