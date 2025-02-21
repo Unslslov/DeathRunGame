@@ -1,13 +1,20 @@
 using UnityEngine;
+<<<<<<< HEAD
 using UnityEngine.UI;
+=======
+>>>>>>> 98236c49dfff302f88907e51afced8444c372b7e
 
 [RequireComponent(typeof(CharacterController))]
 public class CharacterMovement : MonoBehaviour
 {
     public CharacterController characterController;
     [SerializeField] private Joystick _joystick;
+<<<<<<< HEAD
     [SerializeField] private Button  _buttonJump;
 
+=======
+    [SerializeField] private CameraRotationHandler cameraRotation;
+>>>>>>> 98236c49dfff302f88907e51afced8444c372b7e
 
     [Header("GroundChecker Settings")]
     [SerializeField] private LayerMask _gorundMask;
@@ -32,22 +39,39 @@ public class CharacterMovement : MonoBehaviour
     private Vector3 _moveDirection;
     private float startSpeed;
 
+<<<<<<< HEAD
     private Animator anim;
 
     private void Awake() 
     {
         characterController = GetComponent<CharacterController>();
         anim = GetComponent<Animator>();
+=======
+    private void Awake() 
+    {
+        characterController = GetComponent<CharacterController>();
+>>>>>>> 98236c49dfff302f88907e51afced8444c372b7e
         startSpeed = _speed;
     }
 
     private void FixedUpdate() 
     {
+<<<<<<< HEAD
         _isGrounded = Physics.CheckSphere(_groundCheckerPivot.position, _checkGroundRadius, _gorundMask);
         
         if(_velocity < 0 && _isGrounded)
         {
             _velocity = -2f;
+=======
+        if(_velocity < 0)
+        {
+            _isGrounded = Physics.CheckSphere(_groundCheckerPivot.position, _checkGroundRadius, _gorundMask);
+            
+            if(_isGrounded)
+            {
+                _velocity = -2f;
+            }
+>>>>>>> 98236c49dfff302f88907e51afced8444c372b7e
         }
     
         Move(_moveDirection);
@@ -57,6 +81,7 @@ public class CharacterMovement : MonoBehaviour
     private void Update()
     {
         _moveDirection = transform.right * _joystick.Horizontal + transform.forward * _joystick.Vertical;
+<<<<<<< HEAD
         DoAnimate(_moveDirection);
         
         bool isSpaceHold = Input.GetKey(KeyCode.Space);
@@ -67,6 +92,14 @@ public class CharacterMovement : MonoBehaviour
         {
             Jump();
           // _buttonJump.onClick.AddListener(Jump);
+=======
+        
+        bool isSpaceHold = Input.GetKey(KeyCode.Space);
+
+        if(_isGrounded && isSpaceHold)
+        {
+            Jump();
+>>>>>>> 98236c49dfff302f88907e51afced8444c372b7e
         }
         else if(!_isGrounded && isSpaceHold && _moveDirection.z != 0)
         {
@@ -98,6 +131,7 @@ public class CharacterMovement : MonoBehaviour
 
         characterController.Move(Vector3.up * _velocity * Time.fixedDeltaTime); 
     }
+<<<<<<< HEAD
 
     private void DoAnimate(Vector3 move)
     {
@@ -106,4 +140,6 @@ public class CharacterMovement : MonoBehaviour
         anim.SetFloat("Speed", speed);
         // anim.SetFloat("Speed", Mathf.Abs(move.z) > 0 ? Mathf.Abs(move.z) : Mathf.Abs(move.x) > 0 ? Mathf.Abs(move.x) : 0);
     }
+=======
+>>>>>>> 98236c49dfff302f88907e51afced8444c372b7e
 }

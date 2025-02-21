@@ -6,11 +6,16 @@ using UnityEngine;
 
 namespace Unsl
 {
-public class FileSaveLoad
+public static class FileSaveLoad
 {
     private const string SaveFolderName = "Saves";
     private const string SaveFileNameSettings = "SaveSettingsFile.json";
     private const string SaveFileNameKnifes = "SaveNameKnifesFile.json";
+    private const string SaveFileStarsOnLevels = "SaveStarsOnLevelsFile.json";
+    private const string SaveFileBestResultOnLevels = "SaveBestResultOnLevelsFile.json";
+    private const string SaveFileBestTimeRunOnLevels = "SaveBestTimeRunOnLevelsFile.json";
+    private const string SaveFileMoney = "SaveMoneyFile.json";
+    private const string SaveFileTutorial = "SaveTutorialFile.json";
 
     private static string SaveDataFolder => Path.Combine(Application.persistentDataPath, SaveFolderName);
 
@@ -18,7 +23,65 @@ public class FileSaveLoad
 
     private static string SaveKnifeFilePath => Path.Combine(Application.persistentDataPath, SaveFileNameKnifes);
 
-    public void Save<T>(List<T> data, TypeSave type)
+    private static string SaveMoneyPath => Path.Combine(Application.persistentDataPath, SaveFileMoney);
+
+    private static string SaveStarsOnLevelsPath => Path.Combine(Application.persistentDataPath, SaveFileStarsOnLevels);
+    private static string SaveBestResultOnLevelsPath => Path.Combine(Application.persistentDataPath, SaveFileBestResultOnLevels);
+    private static string SaveBestTimeRunOnLevelsPath => Path.Combine(Application.persistentDataPath, SaveFileBestTimeRunOnLevels);
+    private static string SaveTutroialPath => Path.Combine(Application.persistentDataPath, SaveFileTutorial);
+
+    public static void Save<T>(List<T> data, TypeSave type)
+    {
+        try
+        {
+            if(!Directory.Exists(SaveDataFolder))
+                Directory.CreateDirectory(SaveDataFolder); 
+
+            var SaveFile = new SaveLoadListData<T>(data);
+            var serializedSaveFile = JsonConvert.SerializeObject(SaveFile);
+
+            switch(type)
+            {
+                case TypeSave.Knives:
+                {
+                    File.WriteAllText(SaveKnifeFilePath, serializedSaveFile);
+                    Debug.Log(Path.Combine(Application.persistentDataPath, SaveFileNameKnifes));
+                    break;
+                }
+                case TypeSave.Settings:
+                {
+                    File.WriteAllText(SaveSettingFilePath, serializedSaveFile);
+                    Debug.Log(Path.Combine(Application.persistentDataPath, SaveFileNameSettings));
+                    break;
+                }
+                case TypeSave.CountStarsOnLevels:
+                {
+                    File.WriteAllText(SaveStarsOnLevelsPath, serializedSaveFile);
+                    Debug.Log(Path.Combine(Application.persistentDataPath, SaveFileStarsOnLevels));
+                    break;
+                }
+                case TypeSave.BestResultOnLevels:
+                {
+                    File.WriteAllText(SaveBestResultOnLevelsPath, serializedSaveFile);
+                    Debug.Log(Path.Combine(Application.persistentDataPath, SaveFileBestResultOnLevels));
+                    break;
+                }
+                case TypeSave.BestTimeRunOnLevels:
+                {
+                    File.WriteAllText(SaveBestTimeRunOnLevelsPath, serializedSaveFile);
+                    Debug.Log(Path.Combine(Application.persistentDataPath, SaveFileBestTimeRunOnLevels));
+                    break;
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogException(e);
+            throw;
+        }
+    }
+
+    public static void Save<T>(T data, bool typeSave = true)
     {
         try
         {
@@ -28,16 +91,16 @@ public class FileSaveLoad
             var SaveFile = new SaveLoadData<T>(data);
             var serializedSaveFile = JsonConvert.SerializeObject(SaveFile);
 
-            if(type == TypeSave.Settings)
+            if(typeSave == true)
             {
-                File.WriteAllText(SaveSettingFilePath, serializedSaveFile);
+                File.WriteAllText(SaveMoneyPath, serializedSaveFile);
+                Debug.Log(Path.Combine(Application.persistentDataPath, SaveFileMoney));
             }
-            else if(type == TypeSave.Knives)
+            else
             {
-                File.WriteAllText(SaveKnifeFilePath, serializedSaveFile);
+                File.WriteAllText(SaveTutroialPath, serializedSaveFile);
+                Debug.Log(Path.Combine(Application.persistentDataPath, SaveFileTutorial));
             }
-
-            Debug.Log(Path.Combine(Application.persistentDataPath, SaveFileNameSettings));
         }
         catch (Exception e)
         {
@@ -46,28 +109,46 @@ public class FileSaveLoad
         }
     }
 
-    public static SaveLoadData<T> Load<T>(TypeSave type)
+    public static SaveLoadListData<T> LoadList<T>(TypeSave type)
     {
 
         string saveFilePath = string.Empty;
 
-        bool isKnives = type == TypeSave.Knives;
+        switch(type)
+        {
+            case TypeSave.Knives:
+            {
+                saveFilePath = SaveKnifeFilePath;
+                break;
+            }
+            case TypeSave.Settings:
+            {
+                saveFilePath = SaveSettingFilePath;
+                break;
+            }
+            case TypeSave.CountStarsOnLevels:
+            {
+                saveFilePath = SaveStarsOnLevelsPath;
+                break;
+            }
+            case TypeSave.BestResultOnLevels:
+            {
+                saveFilePath = SaveBestResultOnLevelsPath;
+                break;
+            }
+            case TypeSave.BestTimeRunOnLevels:
+            {
+                saveFilePath = SaveBestTimeRunOnLevelsPath;
+                break;
+            }
+            default:
+            {
+                Debug.LogError($"Unsupported TypeSave: {type}");
+                return null;
+            }
+        }
 
-        if (isKnives)
-        {
-            saveFilePath = SaveKnifeFilePath;
-        }
-        else if (type == TypeSave.Settings)
-        {
-            saveFilePath = SaveSettingFilePath;
-        }
-        else
-        {
-            Debug.LogError($"Unsupported TypeSave: {type}");
-            return null;
-        }
-
-        if (!File.Exists(saveFilePath) && isKnives) 
+        if (!File.Exists(saveFilePath) && type == TypeSave.Knives) 
         { 
             Debug.LogError($"Can't load save file. File {saveFilePath} doesn't exist. The create Default Weapon"); 
             
@@ -78,7 +159,7 @@ public class FileSaveLoad
                 defaultData.Add((T)(object)"Axe");
             }
 
-            SaveLoadData<T> axe = new SaveLoadData<T>(defaultData); 
+            SaveLoadListData<T> axe = new SaveLoadListData<T>(defaultData); 
             return axe; 
         } 
         else if (!File.Exists(saveFilePath))
@@ -89,6 +170,44 @@ public class FileSaveLoad
         }
        
         Debug.Log(saveFilePath);
+       
+        try
+        {
+            var serializedFile = File.ReadAllText(saveFilePath);
+
+            if (string.IsNullOrEmpty(serializedFile))
+            {
+                Debug.LogError($"Loaded file {saveFilePath} is empty.");
+                return null;
+            }
+
+            Debug.Log($"Save to {saveFilePath}");
+            return JsonConvert.DeserializeObject<SaveLoadListData<T>>(serializedFile);
+        
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+    public static SaveLoadData<T> Load<T>(bool saveType = true)
+    {
+
+        string saveFilePath = string.Empty;
+
+        if(saveType == true)
+            saveFilePath = SaveMoneyPath;
+        else
+            saveFilePath = SaveTutroialPath;
+
+        if (!File.Exists(saveFilePath))
+        {
+            Debug.LogError($"Can't load save file. File {saveFilePath} is doesn't exist.");
+          
+            return null;
+        }
        
         try
         {

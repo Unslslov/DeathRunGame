@@ -19,7 +19,7 @@ public class UVMoving : MonoBehaviour
 
         _rend.material.SetTextureOffset("_MainTex", new Vector2(_offsetX, _offsetY));
 
-        if(_offsetX >= 500 || _offsetY  >= 500)
+        if(_offsetY <= -500 || _offsetY  >= 500)
         {
             _offsetX = 0;
             _offsetY = 0;

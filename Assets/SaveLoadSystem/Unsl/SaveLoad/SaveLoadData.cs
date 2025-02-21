@@ -6,11 +6,11 @@ namespace Unsl
     [Serializable]
     public class SaveLoadData<T>
     {
-        public SaveLoadData(List<T> listObjects)
+        public SaveLoadData(T item)
         {
-            ListObjects = listObjects;
+            this.item = item;
         }
 
-        public List<T> ListObjects {get; private set;}
+        public T item {get; private set;}
     }
 }

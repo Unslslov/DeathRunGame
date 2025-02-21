@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 9117097649849672957}
   - component: {fileID: 1488748374711841189}
   - component: {fileID: 3214398164279914040}
+  - component: {fileID: 1912383227441787226}
   m_Layer: 0
   m_Name: BigBall
   m_TagString: Untagged
@@ -250,6 +251,7 @@ MonoBehaviour:
   _pointToMove: {fileID: 8463439716338851815}
   _spawnPoint: {fileID: 7392220232695321665}
   _isBounced: 1
+  _intervalSpawn: 3
 --- !u!114 &1488748374711841189
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -262,7 +264,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee2ef53cd8a585e43a71059641e2c8ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpawnPoint: {fileID: 0}
+  _spawns: {fileID: 0}
+  _spawnPointCollection: {fileID: 0}
 --- !u!135 &3214398164279914040
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -284,6 +287,27 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.99999994
   m_Center: {x: -0.00000032782552, y: 0, z: -0.00000035762784}
+--- !u!135 &1912383227441787226
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7359340739332106794}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1.084097
+  m_Center: {x: -0.0000003680704, y: 0.04245766, z: -0.0000003680704}
 --- !u!1 &8800503472656192870
 GameObject:
   m_ObjectHideFlags: 0

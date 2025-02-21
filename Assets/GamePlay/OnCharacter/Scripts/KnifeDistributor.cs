@@ -14,7 +14,7 @@ public class KnifeDistributor : MonoBehaviour
     
     private void OnEnable() 
     {
-        var name = FileSaveLoad.Load<string>(TypeSave.Knives).ListObjects;
+        var name = FileSaveLoad.LoadList<string>(TypeSave.Knives).ListObjects;
 
         _knifes = CreateAccessOnKnives(_knifes, name);
 

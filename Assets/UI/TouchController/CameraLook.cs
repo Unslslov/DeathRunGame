@@ -1,17 +1,22 @@
 using UnityEngine;
+using Unsl;
 
-public class CameraLook : MonoBehaviour
+public class CameraLook : MonoBehaviour, ISource<float>
 {
     [SerializeField] private Transform _Characterbody;
     [SerializeField] private FixedTouchField _fixedTouchField;
-
-    public float Sensivity = 40f;
+    [SerializeField] private float Sensivity = 0.1f;
     public Vector2 LockAxis;
 
     private float _xMove;
     private float _yMove;
     private float _xRotation;
-    
+
+    private void Start() 
+    {
+        SourceInitialize(0);
+    }
+
     void Update()
     {
         LockAxis = _fixedTouchField.TouchDist;
@@ -24,5 +29,20 @@ public class CameraLook : MonoBehaviour
 
         transform.localRotation = Quaternion.Euler(_xRotation, 0, 0);
         _Characterbody.Rotate(Vector3.up * _xMove);
+    }
+
+    public void SetSensivity(float sensivity)
+    {
+        Sensivity = sensivity;
+    }
+
+    public void SourceInitialize(float source)
+    {
+        var settingValue = FileSaveLoad.LoadList<float>(TypeSave.Settings);
+
+        if(settingValue != null)
+        {
+            Sensivity = settingValue.ListObjects[2];
+        }
     }
 }

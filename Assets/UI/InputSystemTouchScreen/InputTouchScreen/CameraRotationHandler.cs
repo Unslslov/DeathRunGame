@@ -1,3 +1,9 @@
+<<<<<<< HEAD
+=======
+using System;
+using System.Collections;
+using System.Collections.Generic;
+>>>>>>> 98236c49dfff302f88907e51afced8444c372b7e
 using UnityEngine;
 
 public class CameraRotationHandler : MonoBehaviour
@@ -25,7 +31,11 @@ public class CameraRotationHandler : MonoBehaviour
 
     private void OnRotationInputReceived(Vector2 delta)
     {
+<<<<<<< HEAD
         var dt = Time.fixedDeltaTime;
+=======
+        var dt = Time.deltaTime;
+>>>>>>> 98236c49dfff302f88907e51afced8444c372b7e
         vertical -= _sensitivity * delta.y * dt;
         horizontal += _sensitivity * delta.x * dt;
 

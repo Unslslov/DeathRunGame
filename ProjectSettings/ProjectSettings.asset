@@ -12,8 +12,14 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
+<<<<<<< HEAD
+  companyName: Unsl
+  productName: "Flying movement - \u0411\u0435\u0433\u0438 \u0447\u0442\u043E\u0431\u044B
+    \u0432\u044B\u0436\u0438\u0442\u044C"
+=======
   companyName: DefaultCompany
   productName: Test3DInstruments
+>>>>>>> 98236c49dfff302f88907e51afced8444c372b7e
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -135,7 +141,11 @@ PlayerSettings:
   vulkanEnableLateAcquireNextImage: 0
   vulkanEnableCommandBufferRecycling: 1
   loadStoreDebugModeEnabled: 0
+<<<<<<< HEAD
+  bundleVersion: 1.0.1
+=======
   bundleVersion: 0.1
+>>>>>>> 98236c49dfff302f88907e51afced8444c372b7e
   preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
@@ -163,8 +173,13 @@ PlayerSettings:
     VisionOS: 0
     iPhone: 0
     tvOS: 0
+<<<<<<< HEAD
+  overrideDefaultApplicationIdentifier: 1
+  AndroidBundleVersionCode: 5
+=======
   overrideDefaultApplicationIdentifier: 0
   AndroidBundleVersionCode: 1
+>>>>>>> 98236c49dfff302f88907e51afced8444c372b7e
   AndroidMinSdkVersion: 22
   AndroidTargetSdkVersion: 0
   AndroidPreferredInstallLocation: 1
@@ -278,7 +293,18 @@ PlayerSettings:
   AndroidMinifyDebug: 0
   AndroidValidateAppBundleSize: 1
   AndroidAppBundleSizeToValidate: 150
+<<<<<<< HEAD
+  m_BuildTargetIcons:
+  - m_BuildTarget: 
+    m_Icons:
+    - serializedVersion: 2
+      m_Icon: {fileID: 2800000, guid: 524e66dd34a3d23489fde955e6166edc, type: 3}
+      m_Width: 128
+      m_Height: 128
+      m_Kind: 0
+=======
   m_BuildTargetIcons: []
+>>>>>>> 98236c49dfff302f88907e51afced8444c372b7e
   m_BuildTargetPlatformIcons:
   - m_BuildTarget: Android
     m_Icons:
@@ -735,7 +761,28 @@ PlayerSettings:
   webGLMemoryGeometricGrowthStep: 0.2
   webGLMemoryGeometricGrowthCap: 96
   webGLPowerPreference: 2
+<<<<<<< HEAD
+  scriptingDefineSymbols:
+    Android: DOTWEEN
+    EmbeddedLinux: DOTWEEN
+    GameCoreScarlett: DOTWEEN
+    GameCoreXboxOne: DOTWEEN
+    LinuxHeadlessSimulation: DOTWEEN
+    Nintendo Switch: DOTWEEN
+    PS4: DOTWEEN
+    PS5: DOTWEEN
+    QNX: DOTWEEN
+    Stadia: DOTWEEN
+    Standalone: DOTWEEN
+    VisionOS: DOTWEEN
+    WebGL: DOTWEEN
+    Windows Store Apps: DOTWEEN
+    XboxOne: DOTWEEN
+    iPhone: DOTWEEN
+    tvOS: DOTWEEN
+=======
   scriptingDefineSymbols: {}
+>>>>>>> 98236c49dfff302f88907e51afced8444c372b7e
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend: {}
@@ -847,7 +894,11 @@ PlayerSettings:
   cloudProjectId: c2b198c2-352e-4a7d-8950-118d5b4a9b6f
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
+<<<<<<< HEAD
   projectName: maratloh
+=======
+  projectName: Test3DInstruments
+>>>>>>> 98236c49dfff302f88907e51afced8444c372b7e
   organizationId: unsl
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0

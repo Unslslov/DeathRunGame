@@ -19,9 +19,7 @@ public class SaveKnifes : MonoBehaviour
 
     private void SetSettingsCount()
     {
-        FileSaveLoad save = new FileSaveLoad();
-
-        save.Save(_knifes, TypeSave.Knives);
+        FileSaveLoad.Save(_knifes, TypeSave.Knives);
     }
 
     private void OnDisable() 

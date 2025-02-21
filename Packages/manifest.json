@@ -1,11 +1,18 @@
 {
   "dependencies": {
+<<<<<<< HEAD
     "com.unity.2d.sprite": "1.0.0",
+=======
+>>>>>>> 98236c49dfff302f88907e51afced8444c372b7e
     "com.unity.collab-proxy": "2.2.0",
     "com.unity.device-simulator.devices": "1.0.0",
     "com.unity.feature.development": "1.0.1",
     "com.unity.inputsystem": "1.7.0",
     "com.unity.memoryprofiler": "1.0.0",
+<<<<<<< HEAD
+    "com.unity.nuget.newtonsoft-json": "3.2.1",
+=======
+>>>>>>> 98236c49dfff302f88907e51afced8444c372b7e
     "com.unity.probuilder": "5.1.1",
     "com.unity.progrids": "3.0.3-preview.6",
     "com.unity.textmeshpro": "3.0.6",

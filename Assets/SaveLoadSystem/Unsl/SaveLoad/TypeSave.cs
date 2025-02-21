@@ -1,5 +1,8 @@
 public enum TypeSave
 {
     Settings,
-    Knives
+    Knives,
+    CountStarsOnLevels,
+    BestResultOnLevels,
+    BestTimeRunOnLevels
 }
