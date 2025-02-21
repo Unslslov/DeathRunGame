@@ -9,6 +9,8 @@ public class TelepotPlayer : MonoBehaviour
     {
         if(col.CompareTag("Player"))
         {
+            _rbPlayer = col.GetComponent<Rigidbody>();
+
             col.gameObject.transform.rotation = 
                 Quaternion.Euler(col.gameObject.transform.rotation.x, 270f, col.gameObject.transform.rotation.z);
             

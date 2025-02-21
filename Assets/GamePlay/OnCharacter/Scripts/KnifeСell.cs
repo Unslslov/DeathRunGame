@@ -1,20 +1,29 @@
 using System.Collections;
 using Player;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class KnifeСell : MonoBehaviour, IPointerClickHandler, IPointerDownHandler //, IPointerUpHandler
+public class KnifeСell : MonoBehaviour, IPointerClickHandler //, IPointerDownHandler, IPointerUpHandler
 {
+    [Header("Objects In The Prefab")]
+    [SerializeField] private GameObject _SelectedIcon;
+    [SerializeField] private Image _icon; 
+    
+    [Header("Text Scales")]
+    [SerializeField] private TextMeshProUGUI _scaleSpeed;
+    [SerializeField] private TextMeshProUGUI _scaleGravity;
+
+    [Header("ObjectsFromDistributor")]
     [SerializeField] private GameObject _weaponPrefab;
-    [SerializeField] private Movement _playerMovement; 
+    [SerializeField] private Movement _playerMovement;
+    public Transform PrefabWeaponOnScene;
+
     public float Speed {get; private set;}
     public float JumpForce {get; private set;}
     public float Gravity {get; private set;}
-    public Transform PrefabWeaponOnScene;
-    
-    private GameObject _preSelectedIcon;
-    private GameObject _SelectedIcon;
 
     public void Render(KnifeAttribute knifeAttribute, Transform place, Movement playerMovement)
     {
@@ -22,32 +31,46 @@ public class KnifeСell : MonoBehaviour, IPointerClickHandler, IPointerDownHandl
         JumpForce = knifeAttribute.JumpForce;
         Gravity = knifeAttribute.Gravity;
 
-        transform.GetChild(3).gameObject.GetComponent<Image>().sprite = knifeAttribute.ImageIcon;
+        _icon.sprite = knifeAttribute.ImageIcon;
         _weaponPrefab = knifeAttribute.WeaponPrefab;
 
         _playerMovement = playerMovement;
         
         PrefabWeaponOnScene = place;
 
-        _SelectedIcon = transform.GetChild(2).gameObject;
-        _preSelectedIcon = transform.GetChild(1).gameObject;
+        _scaleSpeed.text = ((int)Speed).ToString();
+        _scaleGravity.text = Mathf.Abs((int)Gravity).ToString();
     }
 
-    //  Execution order : PointerDown -> PointerUp -> PointerClickt
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        _preSelectedIcon.SetActive(true);
-    }
-
+    //  Execution order : PointerDown -> PointerUp -> PointerClick
      public void OnPointerClick(PointerEventData eventData)
     {
         // TODO : CLEAR CHILD OBJECTS IN TRANSFORM
         _SelectedIcon.SetActive(true);
 
-        var cell = Instantiate(_weaponPrefab, PrefabWeaponOnScene);
-        cell.transform.localPosition = new Vector3(0,0,0);
+        if(PrefabWeaponOnScene.childCount == 0)
+        {
+            var cell = Instantiate(_weaponPrefab, PrefabWeaponOnScene);
+            cell.transform.localPosition = new Vector3(0,0,0);
+        }
+        else 
+        {
+            Destroy(PrefabWeaponOnScene.GetChild(0).gameObject);
+
+            var cell = Instantiate(_weaponPrefab, PrefabWeaponOnScene);
+            cell.transform.localPosition = new Vector3(0,0,0);
+        }
 
         _playerMovement.SetMovementSettings(this);
+        
+        StartCoroutine(DisableSelectedIcon());
+    }
+
+    private IEnumerator DisableSelectedIcon()
+    {
+        yield return  new WaitForSeconds(0.15f);
+
+        _SelectedIcon.SetActive(false);
     }
 
     // public void OnPointerUp(PointerEventData eventData)

@@ -9,8 +9,6 @@ public class TouchScreenGameplayInput
     private readonly InputMap _inputMap;
     private readonly RectTransform _inputRotationZone;
 
-    private int _i;
-
     public TouchScreenGameplayInput(InputMap inputMap, RectTransform inputRotationZone)
     {
         _inputMap = inputMap;
@@ -18,14 +16,6 @@ public class TouchScreenGameplayInput
 
         _inputMap.TouchScreen.TouchPress.started += OnTouchPressStarted;
         _inputMap.TouchScreen.TouchPress.canceled += OnTouchPressCanceled;
-
-        // int ist = _inputMap.TouchScreen.TouchPress.;
-
-
-        Debug.Log(_inputMap.TouchScreen.TouchPress.controls.Count);
-        if(_inputMap.TouchScreen.TouchPress.controls.Count > 1)
-        {
-        }
     }
 
     private void OnTouchPressStarted(InputAction.CallbackContext context)

@@ -49,15 +49,16 @@ public class SecretMovement : MonoBehaviour
                 }
             }
         }
-        else
+        else 
         {
+            _currentPoint = 0;
+            
             Transform target = _points[_currentPoint];
 
             if(transform.position != target.position)
             {
                 transform.position = Vector3.MoveTowards(transform.position, target.position, _speed * Time.fixedDeltaTime);
             }
-
         }
     }
 

@@ -9,9 +9,9 @@ namespace SaveLoadSystem.Example
     {
         public string ComponentSaveId => "Inventory";
 
-         public List<InventoryItem> Items { get; private set; }= new();
-         public int EquippedTool { get; private set; }
-         public int EquippedArmor { get; private set; }
+        public List<InventoryItem> Items { get; private set; }= new();
+        public int EquippedTool { get; private set; }
+        public int EquippedArmor { get; private set; }
 
         public Inventory(params InventoryItem[] initialItems)
         {

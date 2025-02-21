@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b9e57af206554949b67e9d199c4538d, type: 3}
   m_Name: Shotgun
   m_EditorClassIdentifier: 
+  _name: Shotgun
+  _cost: 150
   _speed: 10
   _jumpForce: 3
   _gravity: -9.81

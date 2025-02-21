@@ -1,5 +1,7 @@
+using System;
 using TMPro;
 using UnityEngine;
+using Unsl;
 
 public class ShowPlayerMoney : MonoBehaviour
 {
@@ -12,8 +14,16 @@ public class ShowPlayerMoney : MonoBehaviour
 
     private void Show()
     {
-        var money = Money.coins;
+        _textField.text = Money.coins.ToString();
+    }
 
-        _textField.text = money.ToString();
+    public void ChangeMoney(int amount, bool isAdd)
+    {
+        if(!isAdd)
+            Money.coins -= amount;
+        else
+            Money.coins += amount;
+
+        _textField.text = Money.coins.ToString();
     }
 }

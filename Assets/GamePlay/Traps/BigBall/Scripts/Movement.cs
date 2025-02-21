@@ -18,11 +18,14 @@ namespace BigBall
         [Header("SpawnSettings")]
         [SerializeField] private float _intervalSpawn = 3f;
 
-        private  Rigidbody _rb;
+        [SerializeField] private  Rigidbody _rb;
+        [SerializeField] private MeshRenderer _meshRenderer;
+        [SerializeField] private Collider _collider;
 
         private void OnValidate() 
         {
-            _rb ??= GetComponent<Rigidbody>();   
+            _rb ??= GetComponent<Rigidbody>();  
+            _meshRenderer ??= GetComponent<MeshRenderer>();
         }
 
         private void OnCollisionEnter(Collision col) 
@@ -43,7 +46,8 @@ namespace BigBall
             {
                 StartCoroutine(ReturnBallToSpawnPoint());
 
-                gameObject.GetComponent<MeshRenderer>().enabled = false;
+                _meshRenderer.enabled = false;
+                _collider.enabled = false;
             }    
         }
 
@@ -55,7 +59,8 @@ namespace BigBall
                 
             gameObject.transform.position = _spawnPoint.position;
 
-            gameObject.GetComponent<MeshRenderer>().enabled = true;
+           _meshRenderer.enabled = true;
+           _collider.enabled = true;
         }
     }
 }

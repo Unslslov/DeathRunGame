@@ -1,4 +1,6 @@
+using TMPro;
 using UnityEngine;
+using Zenject;
 
 namespace Player 
 {
@@ -8,6 +10,9 @@ namespace Player
     {
     [SerializeField] private Joystick _joystick;
     [SerializeField] FixedTouchField  _jumpInput;
+
+    [Header("Audio")]
+    [SerializeField] private SoundSource _soundSource;
 
     [Header("GroundChecker Settings")]
     [SerializeField] private LayerMask _gorundMask;
@@ -27,20 +32,37 @@ namespace Player
     [Header("Speedometr")]
     [SerializeField] private Speedometer speedometer; 
 
+
     [SerializeField] private Rigidbody _rb;
     [SerializeField] private Animator _anim;
     [SerializeField] private float  _velocity;
     
+    private TextFadeAndMove  _checkWeaponText;
+    private StopWatch _stopwatch; 
     private Vector3 _moveDirection;
     private bool _isGrounded;
+    private bool _isJumping;
     private int countJump;
     private float _startSpeed;
-
 
     private void OnValidate() 
     {
         _rb ??= GetComponent<Rigidbody>();
-        _anim ??= GetComponent<Animator>();
+        _anim ??= GetComponentInChildren<Animator>();
+    }
+
+    [Inject]
+    public void Constructor(TextFadeAndMove checkWeaponText, StopWatch stopWatch)
+    {
+        _checkWeaponText = checkWeaponText;
+        _stopwatch = stopWatch;
+    }
+
+    private void Awake()
+    {
+        _soundSource = GetComponent<SoundSource>();
+
+        _soundSource.OnClipPlayedEvent += AudioClipPlayed;
     }
 
     private void FixedUpdate() 
@@ -58,57 +80,79 @@ namespace Player
     
     private void Update()
     {
-        // _moveDirection = transform.right * _joystick.Horizontal + transform.forward * _joystick.Vertical;
+        _moveDirection = transform.right * _joystick.Horizontal + transform.forward * _joystick.Vertical;
 
-        // DoAnimate(_moveDirection);
-        
-        // if(_isGrounded && _jumpInput.isJumping)
-        // {
-        //    Jump();
-        // }
-        // else if(!_isGrounded && _jumpInput.isJumping && _moveDirection.z != 0)
-        // {
-        //     _speed = Mathf.Lerp(_speed, _maxSpeed, _acceleration * Time.deltaTime);
-
-        //     speedometer?.GetTargetVelocity(_speed);
-        // }
-        // else if(_jumpInput.isJumping == false)
-        // {
-        //     _speed = Mathf.Lerp(_speed, _startSpeed, _deceleration * Time.deltaTime);
-
-        //     speedometer?.GetTargetVelocity(_speed);
-        // }
-        _moveDirection = transform.right * Input.GetAxis("Horizontal") + transform.forward * Input.GetAxis("Vertical");
+        CheckWeaponOnCharacter();
 
         DoAnimate(_moveDirection);
         
-        //    countJump = 0;
-        //    countJump += 1;
-        // else if(countJump == 1) //&& TODO: DoubleClickInput)
-        // {
-
-        // }
-        if(_isGrounded && Input.GetKeyDown(KeyCode.Space))
+        if(_isGrounded && _jumpInput.isJumping)
         {
-           Jump();  
+           Jump();
         }
-        else if(!_isGrounded && Input.GetKeyDown(KeyCode.Space) && _moveDirection.z != 0)
+        else if(!_isGrounded && _jumpInput.isJumping && _moveDirection.z != 0)
         {
             _speed = Mathf.Lerp(_speed, _maxSpeed, _acceleration * Time.deltaTime);
 
             speedometer?.GetTargetVelocity(_speed);
         }
-        else if(Input.GetKeyDown(KeyCode.Space) == false)
+        else if(_jumpInput.isJumping == false)
         {
             _speed = Mathf.Lerp(_speed, _startSpeed, _deceleration * Time.deltaTime);
 
             speedometer?.GetTargetVelocity(_speed);
         }
+        // _moveDirection = transform.right * Input.GetAxis("Horizontal") + transform.forward * Input.GetAxis("Vertical");
+
+        // DoAnimate(_moveDirection);
+        
+        // //    countJump = 0;
+        // //    countJump += 1;
+        // // else if(countJump == 1) //&& TODO: DoubleClickInput)
+        // // {
+
+        // // }
+        // if(_isGrounded && Input.GetKey(KeyCode.Space))
+        // {
+        //    Jump();  
+        // }
+        // else if(!_isGrounded && Input.GetKey(KeyCode.Space) && _moveDirection.z != 0)
+        // {
+        //     _speed = Mathf.Lerp(_speed, _maxSpeed, _acceleration * Time.deltaTime);
+
+        //     speedometer?.GetTargetVelocity(_speed);
+        // }
+        // else if(Input.GetKey(KeyCode.Space) == false)
+        // {
+        //     _speed = Mathf.Lerp(_speed, _startSpeed, _deceleration * Time.deltaTime);
+
+        //     speedometer?.GetTargetVelocity(_speed);
+        // }
     }
 
+    private void CheckWeaponOnCharacter()
+    {
+        if(_speed == 0)
+        {
+            if(_joystick.Vertical > 0.1f)
+            {
+                _checkWeaponText.gameObject.SetActive(true);
+                return;
+            }
+        } 
+        else
+            _stopwatch.isActive = true;
+    }
+
+    private void OnDestroy() 
+    {
+        _soundSource.OnClipPlayedEvent -= AudioClipPlayed;
+    }
 
     private void Jump()
     {
+        _isJumping = true;
+
         _velocity = Mathf.Sqrt(_jumpForce * -2 * _gravity);
 
         _rb.velocity = new Vector3(_rb.velocity.x, _velocity, _rb.velocity.z);
@@ -139,6 +183,16 @@ namespace Player
         _jumpForce = knifeCell.JumpForce;
 
         _startSpeed = _speed;
+    }
+
+    private void AudioClipPlayed(AudioSource audioSource, AudioClip clips)
+    {
+        if(_isGrounded && _isJumping)   
+        {
+            audioSource.PlayOneShot(clips);
+
+            _isJumping = false;
+        }
     }
     }
 }
