@@ -3,8 +3,12 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
+<<<<<<< HEAD
   tags:
   - DeathZoneForBigBall
+=======
+  tags: []
+>>>>>>> 98236c49dfff302f88907e51afced8444c372b7e
   layers:
   - Default
   - TransparentFX
@@ -16,8 +20,13 @@ TagManager:
   - 
   - Ground
   - Player
+<<<<<<< HEAD
   - InvisibleWall
   - InvisibleFloor
+=======
+  - 
+  - 
+>>>>>>> 98236c49dfff302f88907e51afced8444c372b7e
   - 
   - 
   - 

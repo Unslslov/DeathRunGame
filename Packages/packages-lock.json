@@ -1,11 +1,14 @@
 {
   "dependencies": {
+<<<<<<< HEAD
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,
       "source": "builtin",
       "dependencies": {}
     },
+=======
+>>>>>>> 98236c49dfff302f88907e51afced8444c372b7e
     "com.unity.collab-proxy": {
       "version": "2.2.0",
       "depth": 0,
@@ -91,6 +94,7 @@
       },
       "url": "https://packages.unity.com"
     },
+<<<<<<< HEAD
     "com.unity.nuget.newtonsoft-json": {
       "version": "3.2.1",
       "depth": 0,
@@ -98,6 +102,8 @@
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
+=======
+>>>>>>> 98236c49dfff302f88907e51afced8444c372b7e
     "com.unity.performance.profile-analyzer": {
       "version": "1.2.2",
       "depth": 1,
